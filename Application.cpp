@@ -1,5 +1,6 @@
 #include "Application.hpp"
 #include <SFML/Graphics.hpp>
+#include <Thor/Vectors.hpp>
 
 Application::Application():
     m_window(sf::VideoMode(800, 600), "Application")
@@ -25,6 +26,10 @@ public:
     }
 
     sf::Vector2f getDirection(float x) const{
+        //TODO: Use Niebler range
+        for (std::size_t i=0; i<m_points.size()-1; ++i)
+            if (x>=m_points[i].x && x<= m_points[i+1].x)
+                return thor::unitVector(m_points[i+1] - m_points[i]);
         return {1.f, 0.f};
     }
 
