@@ -56,14 +56,22 @@ public:
     Wagon(const Tracks& track):
         m_track(track)
     {
-        m_shape.setSize({100.f, 100.f});
+        float width = 50.f;
+        float height = 10.f;
+        m_shape.setSize({width, height});
+        m_shape.setOrigin(width/2.f, height);
+        m_shape.setPosition(100.f, 100.f);
         m_shape.setOutlineThickness(1.f);
         m_shape.setOutlineColor(sf::Color::Green);
         m_shape.setFillColor(sf::Color::Transparent);
     }
 
     void update(){
-        m_shape.move(m_track.getDirection(m_shape.getPosition().x));
+        auto direction = m_track.getDirection(m_shape.getPosition().x);
+        std::cout << direction.x << " " << direction.y << '\n';
+        m_shape.move(direction);
+        m_shape.setRotation(thor::polarAngle(direction));
+
     }
 
 private:
