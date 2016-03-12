@@ -53,6 +53,12 @@ private:
 class Wagon : public sf::Drawable
 {
 public:
+
+    enum class State{
+        OnTrack,
+        OnAir
+    };
+
     Wagon(const Tracks& track):
         m_track(track)
     {
@@ -66,12 +72,17 @@ public:
         m_shape.setFillColor(sf::Color::Transparent);
     }
 
+    void jump(){
+
+    }
+
     void update(){
         auto direction = m_track.getDirection(m_shape.getPosition().x);
-        std::cout << direction.x << " " << direction.y << '\n';
-        m_shape.move(direction);
+        static const float speed = 1.f;
         m_shape.setRotation(thor::polarAngle(direction));
 
+        m_velocity = speed * direction;
+        m_shape.move(direction);
     }
 
 private:
@@ -81,6 +92,7 @@ private:
 
     sf::RectangleShape m_shape;
     const Tracks& m_track;
+    sf::Vector2f m_velocity;
 };
 
 void Application::run()
