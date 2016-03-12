@@ -21,6 +21,10 @@ public:
         m_points.emplace_back(100.f, 100.f);
         m_points.emplace_back(200.f, 200.f);
         m_points.emplace_back(300.f, 300.f);
+        m_points.emplace_back(400.f, 200.f);
+        m_points.emplace_back(450.f, 120.f);
+        m_points.emplace_back(480.f, 200.f);
+        m_points.emplace_back(520.f, 350.f);
 
         m_vertexArray.setPrimitiveType(sf::LinesStrip);
     }
@@ -35,6 +39,7 @@ public:
 
 private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override{
+        m_vertexArray.clear();
         for (const auto& point : m_points)
             m_vertexArray.append(sf::Vertex(point, sf::Color::Cyan));
         target.draw(m_vertexArray);
@@ -51,7 +56,7 @@ public:
     Wagon(const Tracks& track):
         m_track(track)
     {
-        m_shape.setSize({50.f, 10.f});
+        m_shape.setSize({100.f, 100.f});
         m_shape.setOutlineThickness(1.f);
         m_shape.setOutlineColor(sf::Color::Green);
         m_shape.setFillColor(sf::Color::Transparent);
