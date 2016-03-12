@@ -60,7 +60,8 @@ public:
     };
 
     Wagon(const Tracks& track):
-        m_track(track)
+        m_track(track),
+        m_state(State::OnTrack)
     {
         float width = 50.f;
         float height = 10.f;
@@ -77,12 +78,14 @@ public:
     }
 
     void update(){
-        auto direction = m_track.getDirection(m_shape.getPosition().x);
-        static const float speed = 1.f;
-        m_shape.setRotation(thor::polarAngle(direction));
+        if (m_state == State::OnTrack){
+            auto direction = m_track.getDirection(m_shape.getPosition().x);
+            static const float speed = 1.f;
+            m_velocity = speed * direction;
+            m_shape.setRotation(thor::polarAngle(direction));
+        }
 
-        m_velocity = speed * direction;
-        m_shape.move(direction);
+        m_shape.move(m_velocity);
     }
 
 private:
@@ -93,6 +96,7 @@ private:
     sf::RectangleShape m_shape;
     const Tracks& m_track;
     sf::Vector2f m_velocity;
+    State m_state;
 };
 
 void Application::run()
