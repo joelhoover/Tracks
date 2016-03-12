@@ -37,6 +37,19 @@ public:
         return {1.f, 0.f};
     }
 
+    bool collidesWith(const sf::FloatRect& rect) const{
+        for (std::size_t i=0; i<m_points.size()-1; ++i){
+            sf::FloatRect segment(m_points[i].x, m_points[i].y,
+                                  m_points[i+1].x-m_points[i].x,
+                    m_points[i+1].y-m_points[i].y);
+
+            if (segment.intersects(rect))
+                return true;
+        }
+        return false;
+    }
+
+
 private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override{
         m_vertexArray.clear();
@@ -82,11 +95,20 @@ public:
     }
 
     void update(){
+        if (m_velocity.y > 0.f && m_track.collidesWith(m_shape.getGlobalBounds())){
+            m_state = State::OnTrack;
+        }
+
+
+
         if (m_state == State::OnTrack){
             auto direction = m_track.getDirection(m_shape.getPosition().x);
             static const float speed = 1.f;
             m_velocity = speed * direction;
             m_shape.setRotation(thor::polarAngle(direction));
+        }else{
+            static const sf::Vector2f gravity(0.f, 0.01f);
+            m_velocity += gravity;
         }
 
         m_shape.move(m_velocity);
