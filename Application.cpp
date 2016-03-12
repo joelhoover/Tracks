@@ -17,11 +17,11 @@ class Tracks : public sf::Drawable
 public:
     Tracks()
     {
-        //m_points.emplace_back(100.f, 100.f);
+        m_points.emplace_back(100.f, 100.f);
+        m_points.emplace_back(200.f, 200.f);
+        m_points.emplace_back(300.f, 300.f);
+
         m_vertexArray.setPrimitiveType(sf::LinesStrip);
-        m_vertexArray.append(sf::Vertex({100,100}, sf::Color::Cyan));
-        m_vertexArray.append(sf::Vertex({200,200}, sf::Color::Cyan));
-        m_vertexArray.append(sf::Vertex({300,300}, sf::Color::Cyan));
     }
 
     sf::Vector2f getDirection(float x) const{
@@ -30,10 +30,12 @@ public:
 
 private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override{
+        for (const auto& point : m_points)
+            m_vertexArray.append(sf::Vertex(point, sf::Color::Cyan));
         target.draw(m_vertexArray);
     }
 
-    sf::VertexArray m_vertexArray;
+    mutable sf::VertexArray m_vertexArray;
 
     std::vector<sf::Vector2f> m_points;
 };
