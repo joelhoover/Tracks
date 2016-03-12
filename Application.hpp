@@ -13,7 +13,8 @@ public:
 
 private:
     enum class Action{
-        Close
+        Close,
+        Jump
     };
 
     using ActionMap = thor::ActionMap<Action>;

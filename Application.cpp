@@ -74,7 +74,11 @@ public:
     }
 
     void jump(){
+        if (m_state == State::OnAir)
+            return;
 
+        m_state = State::OnAir;
+        m_velocity += sf::Vector2f{0.f, -1.f};
     }
 
     void update(){
@@ -105,6 +109,13 @@ void Application::run()
 
     Tracks tracks;
     Wagon wagon(tracks);
+
+    m_actions[Action::Jump] = thor::Action(sf::Keyboard::Space, thor::Action::ActionType::PressOnce);
+    m_system.connect0(Action::Jump, [&wagon]{
+        wagon.jump();
+    });
+
+
 
 
     while (m_window.isOpen()){
