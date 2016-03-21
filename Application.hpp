@@ -14,7 +14,10 @@ public:
 private:
     enum class Action{
         Close,
-        Jump
+        Jump,
+        Rocket,
+        ToggleFPS,
+        ToggleArrow
     };
 
     using ActionMap = thor::ActionMap<Action>;
