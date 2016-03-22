@@ -13,23 +13,29 @@ Tracks::Tracks(){
     m_right = m_chunks.back().right();
 }
 
+void Tracks::addNewChunk()
+{
+    auto newChunkRight = thor::random(m_right.x+screenWidth/2.f, m_right.x + screenWidth);
+    m_chunks.push_back(TrackChunk(m_right.x,
+                                  newChunkRight,
+                                  m_right.y));
+    m_right = m_chunks.back().right();
+}
+
 void Tracks::update(float left, float right){
     boost::remove_erase_if(m_chunks, [left](const auto& chunk){
-        return chunk.right() < left;
+        return chunk.right().x < left;
     });
 
-    while (right > m_right){
-        auto haveSpace = thor::random(0,1);
+    if (m_chunks.empty())
+        addNewChunk();
 
-        if (haveSpace){
-            m_right += distancePossible();
-        }else{
-            auto newChunkRight = thor::random(m_right+screenWidth/2.f, m_right + screenWidth);
-            m_chunks.push_back(TrackChunk(m_right,
-                                          newChunkRight,
-                                          m_chunks.back().rightHeight()));
-            m_right = m_chunks.back().right();
-        }
+    while (right > m_right.x){
+        auto haveSpace = thor::random(0,1);
+        if (haveSpace)
+            m_right.x += distancePossible();
+        else
+            addNewChunk();
     }
 }
 
@@ -40,7 +46,7 @@ void Tracks::draw(sf::RenderTarget &target, sf::RenderStates states) const{
 
 Tracks::ChunkIterator Tracks::chunkAt(float x) const {
     return boost::find_if(m_chunks, [x](const auto& chunk){
-        return chunk.left()<=x && x<=chunk.right();
+        return chunk.left()<=x && x<=chunk.right().x;
     });
 }
 

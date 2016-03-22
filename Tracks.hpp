@@ -22,7 +22,8 @@ public:
 private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
     float distancePossible() const;
+    void addNewChunk();
 
     Chunks m_chunks;
-    float m_right;
+    sf::Vector2f m_right;
 };

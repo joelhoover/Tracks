@@ -16,10 +16,9 @@ public:
     bool collidesWith(const sf::Shape& shape) const;
     sf::Vector2f getStart() const;
     float left() const;
-    float right() const;
+    const sf::Vector2f& right() const;
     float top() const;
     float bottom() const;
-    float rightHeight() const;
 
 private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;

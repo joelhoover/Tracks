@@ -101,8 +101,8 @@ float TrackChunk::left() const{
     return m_points.front().x;
 }
 
-float TrackChunk::right() const{
-    return m_points.back().x;
+const sf::Vector2f &TrackChunk::right() const{
+    return m_points.back();
 }
 
 float TrackChunk::top() const
@@ -117,11 +117,6 @@ float TrackChunk::bottom() const
     return boost::max_element(m_points, [](const auto& lhs, const auto& rhs){
        return lhs.y < rhs.y;
     })->y;
-}
-
-float TrackChunk::rightHeight() const
-{
-    return m_points.back().y;
 }
 
 void TrackChunk::draw(sf::RenderTarget &target, sf::RenderStates states) const{
