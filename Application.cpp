@@ -53,7 +53,7 @@ void Application::run()
     auto progressBar = sfg::ProgressBar::Create();
     auto progressBarWidth = screenWidth/6.f;
     progressBar->SetPosition({screenWidth/2.f - progressBarWidth/2.f, 0.f});
-    progressBar->SetRequisition({progressBarWidth, 40.f});
+    progressBar->SetRequisition({progressBarWidth, 4*screenHeight/100.f});
     m_desktop.Add(progressBar);
 
     float left(-screenWidth), right(screenWidth);
