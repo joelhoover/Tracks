@@ -8,6 +8,8 @@
 #include <Thor/Shapes/Arrow.hpp>
 #include <boost/math/special_functions/sign.hpp>
 
+#include "ResourcePath.hpp"
+
 Wagon::Wagon(const Tracks &track):
     m_track(track),
     m_state(State::OnTrack),
@@ -24,7 +26,7 @@ Wagon::Wagon(const Tracks &track):
     m_shape.setOutlineColor(sf::Color::Green);
     m_shape.setFillColor(sf::Color::Transparent);
 
-    if (!m_explosion.loadFromFile("explosion00.png"))
+    if (!m_explosion.loadFromFile(resourcePath() + "explosion00.png"))
         throw std::runtime_error("Cannot load texture");
 
 

@@ -4,6 +4,8 @@
 #include <iostream>
 #include <cmath>
 
+#include "ResourcePath.hpp"
+
 static std::string toTwoDigits(int s){
     std::string toReturn;
     if (s<10)
@@ -28,10 +30,10 @@ Score::Score():
     m_milliseconds(0.f),
     m_bestTime(std::nanf(""))
 {
-    m_font.loadFromFile("KBZipaDeeDooDah.ttf");
+    m_font.loadFromFile(resourcePath() + "KBZipaDeeDooDah.ttf");
     m_text.setFont(m_font);
 
-    std::ifstream bestTime("BestTime");
+    std::ifstream bestTime(savePath() + "BestTime");
     if (bestTime.good() && bestTime >> m_bestTime)
         m_bestTimeString = "Best: " + timeToString(m_bestTime);
 }
@@ -40,7 +42,7 @@ Score::~Score()
 {
     try {
         if (!std::isnan(m_bestTime)){
-            std::ofstream bestTime("BestTime");
+            std::ofstream bestTime(savePath() + "BestTime");
             bestTime << m_bestTime;
         }
     }catch(const std::exception& e){
