@@ -2,6 +2,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <fstream>
 #include <iostream>
+#include <cmath>
 
 static std::string toTwoDigits(int s){
     std::string toReturn;
